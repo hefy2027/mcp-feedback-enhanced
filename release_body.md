@@ -1,4 +1,4 @@
-# Release v2.6.4 - Latest Release
+# Release v2.6.5 - Latest Release
 
 ## 🌟 Key Highlights
 
@@ -20,10 +20,10 @@
 
 ```bash
 # Latest version / 最新版本
-uvx mcp-feedback-enhanced@latest
+uvx feedback-angel@latest
 
 # This specific version / 此特定版本
-uvx mcp-feedback-enhanced@v2.6.4
+uvx feedback-angel@v2.6.5
 ```
 
 ## 🔗 Links
