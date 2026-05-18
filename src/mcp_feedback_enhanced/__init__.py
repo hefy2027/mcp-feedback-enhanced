@@ -4,8 +4,9 @@ Feedback Angel (Interactive Feedback MCP)
 ==========================================
 
 互動式用戶回饋 MCP 伺服器，提供 AI 輔助開發中的回饋收集功能。
+Forked from MCP Feedback Enhanced (https://github.com/Minidoracat/mcp-feedback-enhanced)
 
-作者: Fábio Ferreira
+原始作者: Fábio Ferreira
 增強功能: Web UI 支援、圖片上傳、現代化界面設計
 
 特色：

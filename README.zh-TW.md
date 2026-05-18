@@ -1,5 +1,7 @@
 # Feedback Angel（互動回饋 MCP）
 
+> *Fork 自 [MCP Feedback Enhanced](https://github.com/Minidoracat/mcp-feedback-enhanced)*
+
 **🌐 語言切換 / Language:** [English](README.md) | **繁體中文** | [简体中文](README.zh-CN.md)
 
 **原作者：** [Fábio Ferreira](https://x.com/fabiomlferreira) | [原始專案](https://github.com/noopstudios/interactive-feedback-mcp) ⭐
