@@ -98,7 +98,7 @@ jobs:
     with:
       version_type: ${{ github.event.inputs.version_type }}
       custom_version: ${{ github.event.inputs.custom_version }}
-      include_desktop: false
+      include_desktop: true
       desktop_build_run_id: ${{ needs.check-build.outputs.build_run_id }}
     secrets: inherit
 
