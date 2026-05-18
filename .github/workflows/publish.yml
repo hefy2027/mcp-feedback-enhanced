@@ -26,6 +26,27 @@ on:
         required: false
         type: string
 
+  workflow_call:
+    inputs:
+      version_type:
+        description: 'Version bump type'
+        required: false
+        default: 'patch'
+        type: string
+      custom_version:
+        description: 'Custom version number'
+        required: false
+        type: string
+      include_desktop:
+        description: '是否包含桌面應用二進制文件'
+        required: false
+        default: true
+        type: boolean
+      desktop_build_run_id:
+        description: '桌面應用構建的 Run ID'
+        required: false
+        type: string
+
 jobs:
   release:
     runs-on: ubuntu-latest
