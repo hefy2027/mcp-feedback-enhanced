@@ -19,13 +19,6 @@ on:
         default: true
         type: boolean
 
-  push:
-    paths:
-      - 'src-tauri/**'  # 桌面應用代碼變更時自動觸發
-      - 'scripts/build_desktop.py'
-    branches:
-      - main
-
   pull_request:
     paths:
       - 'src-tauri/**'
