@@ -1,9 +1,9 @@
-# MCP Feedback Enhanced
+# Feedback Angel
 
 **🌐 Language / 語言切換:** **English** | [繁體中文](README.zh-TW.md) | [简体中文](README.zh-CN.md)
 
 **Original Author:** [Fábio Ferreira](https://x.com/fabiomlferreira) | [Original Project](https://github.com/noopstudios/interactive-feedback-mcp) ⭐
-**Enhanced Fork:** [Minidoracat](https://github.com/Minidoracat)
+**Enhanced Fork:** [Minidoracat](https://github.com/Minidoracat) | [hefy2027](https://github.com/hefy2027)
 **UI Design Reference:** [sanshao85/mcp-feedback-collector](https://github.com/sanshao85/mcp-feedback-collector)
 
 ## 🎯 Core Concept

@@ -1,9 +1,9 @@
-# MCP Feedback Enhanced（互動回饋 MCP）
+# Feedback Angel（互動回饋 MCP）
 
 **🌐 語言切換 / Language:** [English](README.md) | **繁體中文** | [简体中文](README.zh-CN.md)
 
 **原作者：** [Fábio Ferreira](https://x.com/fabiomlferreira) | [原始專案](https://github.com/noopstudios/interactive-feedback-mcp) ⭐
-**分支版本：** [Minidoracat](https://github.com/Minidoracat)
+**分支版本：** [Minidoracat](https://github.com/Minidoracat) | [hefy2027](https://github.com/hefy2027)
 **UI 設計參考：** [sanshao85/mcp-feedback-collector](https://github.com/sanshao85/mcp-feedback-collector)
 
 ## 🎯 核心概念

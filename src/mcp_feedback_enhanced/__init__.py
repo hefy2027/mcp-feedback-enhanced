@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-MCP Interactive Feedback Enhanced
-==================================
+Feedback Angel (Interactive Feedback MCP)
+==========================================
 
 互動式用戶回饋 MCP 伺服器，提供 AI 輔助開發中的回饋收集功能。
 

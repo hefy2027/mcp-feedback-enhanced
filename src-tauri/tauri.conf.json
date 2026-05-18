@@ -1,5 +1,5 @@
 {
-  "productName": "MCP Feedback Enhanced",
+  "productName": "Feedback Angel",
   "version": "2.4.3",
   "identifier": "com.minidoracat.mcp-feedback-enhanced",
   "build": {
@@ -12,7 +12,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "MCP Feedback Enhanced",
+        "title": "Feedback Angel",
         "width": 1200,
         "height": 800,
         "minWidth": 800,
@@ -44,7 +44,7 @@
     "externalBin": [],
     "copyright": "Copyright © 2024 Minidoracat",
     "category": "DeveloperTool",
-    "shortDescription": "Enhanced MCP server for interactive user feedback",
+    "shortDescription": "Feedback Angel - Interactive user feedback MCP server",
     "longDescription": "An enhanced MCP server that provides interactive user feedback functionality for AI-assisted development, featuring Web UI with intelligent environment detection.",
     "windows": {
       "certificateThumbprint": null,
