@@ -21,7 +21,7 @@ This is an [MCP server](https://modelcontextprotocol.io/) that establishes **fee
 **Supported Platforms:** [Cursor](https://www.cursor.com) | [Cline](https://cline.bot) | [Windsurf](https://windsurf.com) | [Augment](https://www.augmentcode.com) | [Trae](https://www.trae.ai)
 
 ### 🔄 Workflow
-1. **AI Call** → `mcp-feedback-enhanced` tool
+1. **AI Call** → `feedback-angel` tool
 2. **Interface Launch** → Auto-open desktop application or browser interface (based on configuration)
 3. **Smart Interaction** → Prompt selection, text input, image upload, auto-submit
 4. **Real-time Feedback** → WebSocket connection delivers information to AI instantly
@@ -101,9 +101,9 @@ pip install uv
 ```json
 {
   "mcpServers": {
-    "mcp-feedback-enhanced": {
+    "feedback-angel": {
       "command": "uvx",
-      "args": ["mcp-feedback-enhanced@latest"],
+      "args": ["feedback-angel@latest"],
       "timeout": 600,
       "autoApprove": ["interactive_feedback"]
     }
@@ -115,9 +115,9 @@ pip install uv
 ```json
 {
   "mcpServers": {
-    "mcp-feedback-enhanced": {
+    "feedback-angel": {
       "command": "uvx",
-      "args": ["mcp-feedback-enhanced@latest"],
+      "args": ["feedback-angel@latest"],
       "timeout": 600,
       "env": {
         "MCP_DEBUG": "false",
@@ -135,9 +135,9 @@ pip install uv
 ```json
 {
   "mcpServers": {
-    "mcp-feedback-enhanced": {
+    "feedback-angel": {
       "command": "uvx",
-      "args": ["mcp-feedback-enhanced@latest"],
+      "args": ["feedback-angel@latest"],
       "timeout": 600,
       "env": {
         "MCP_DESKTOP_MODE": "true",
@@ -161,7 +161,7 @@ For optimal results, add the following rules to your AI assistant:
 ```
 # MCP Interactive Feedback Rules
 
-follow mcp-feedback-enhanced instructions
+follow feedback-angel instructions
 ```
 
 ## ⚙️ Advanced Settings
@@ -207,19 +207,19 @@ follow mcp-feedback-enhanced instructions
 ### Testing Options
 ```bash
 # Version check
-uvx mcp-feedback-enhanced@latest version       # Check version
+uvx feedback-angel@latest version       # Check version
 
 # Interface testing
-uvx mcp-feedback-enhanced@latest test --web    # Test Web UI (auto continuous running)
-uvx mcp-feedback-enhanced@latest test --desktop # Test desktop application (v2.5.0 new feature)
+uvx feedback-angel@latest test --web    # Test Web UI (auto continuous running)
+uvx feedback-angel@latest test --desktop # Test desktop application (v2.5.0 new feature)
 
 # Debug mode
-MCP_DEBUG=true uvx mcp-feedback-enhanced@latest test
+MCP_DEBUG=true uvx feedback-angel@latest test
 
 # Specify language for testing
-MCP_LANGUAGE=en uvx mcp-feedback-enhanced@latest test --web    # Force English interface
-MCP_LANGUAGE=zh-TW uvx mcp-feedback-enhanced@latest test --web  # Force Traditional Chinese
-MCP_LANGUAGE=zh-CN uvx mcp-feedback-enhanced@latest test --web  # Force Simplified Chinese
+MCP_LANGUAGE=en uvx feedback-angel@latest test --web    # Force English interface
+MCP_LANGUAGE=zh-TW uvx feedback-angel@latest test --web  # Force Traditional Chinese
+MCP_LANGUAGE=zh-CN uvx feedback-angel@latest test --web  # Force Simplified Chinese
 ```
 
 ### Developer Installation
@@ -238,8 +238,8 @@ make test-desktop-func                                   # Desktop application f
 
 # Or use direct commands
 uv run python -m mcp_feedback_enhanced test              # Standard functional testing
-uvx --no-cache --with-editable . mcp-feedback-enhanced test --web   # Web UI testing (continuous running)
-uvx --no-cache --with-editable . mcp-feedback-enhanced test --desktop # Desktop application testing
+uvx --no-cache --with-editable . feedback-angel test --web   # Web UI testing (continuous running)
+uvx --no-cache --with-editable . feedback-angel test --desktop # Desktop application testing
 
 # Desktop application build (v2.5.0 new feature)
 make build-desktop                                       # Build desktop application (debug mode)
@@ -287,9 +287,9 @@ Set `"MCP_WEB_HOST": "0.0.0.0"` in MCP configuration to allow remote access:
 ```json
 {
   "mcpServers": {
-    "mcp-feedback-enhanced": {
+    "feedback-angel": {
       "command": "uvx",
-      "args": ["mcp-feedback-enhanced@latest"],
+      "args": ["feedback-angel@latest"],
       "timeout": 600,
       "env": {
         "MCP_WEB_HOST": "0.0.0.0",
@@ -326,9 +326,9 @@ A: v2.5.0 introduces cross-platform desktop application support. Set `"MCP_DESKT
 ```json
 {
   "mcpServers": {
-    "mcp-feedback-enhanced": {
+    "feedback-angel": {
       "command": "uvx",
-      "args": ["mcp-feedback-enhanced@latest"],
+      "args": ["feedback-angel@latest"],
       "timeout": 600,
       "env": {
         "MCP_DESKTOP_MODE": "true",
@@ -342,14 +342,14 @@ A: v2.5.0 introduces cross-platform desktop application support. Set `"MCP_DESKT
 **Configuration File Example**: [examples/mcp-config-desktop.json](examples/mcp-config-desktop.json)
 
 **Q: How to use legacy PyQt6 GUI interface?**
-A: v2.4.0 completely removed PyQt6 GUI dependencies. To use legacy GUI, specify v2.3.0 or earlier: `uvx mcp-feedback-enhanced@2.3.0`
+A: v2.4.0 completely removed PyQt6 GUI dependencies. To use legacy GUI, specify v2.3.0 or earlier: `uvx feedback-angel@2.3.0`
 **Note**: Legacy versions don't include new features (prompt management, auto-submit, session management, desktop application, etc.).
 
 **Q: "Unexpected token 'D'" error appears**
 A: Debug output interference. Set `MCP_DEBUG=false` or remove the environment variable.
 
 **Q: Chinese character garbled text**
-A: Fixed in v2.0.3. Update to latest version: `uvx mcp-feedback-enhanced@latest`
+A: Fixed in v2.0.3. Update to latest version: `uvx feedback-angel@latest`
 
 **Q: Window disappears or positioning errors in multi-screen environment**
 A: Fixed in v2.1.1. Go to "⚙️ Settings" tab, check "Always show window at primary screen center" to resolve. Especially suitable for T-shaped screen arrangements and other complex multi-screen configurations.

@@ -199,10 +199,10 @@ jobs:
         echo "" >> release_body.md
         echo '```bash' >> release_body.md
         echo "# Latest version / 最新版本" >> release_body.md
-        echo "uvx mcp-feedback-enhanced@latest" >> release_body.md
+        echo "uvx feedback-angel@latest" >> release_body.md
         echo "" >> release_body.md
         echo "# This specific version / 此特定版本" >> release_body.md
-        echo "uvx mcp-feedback-enhanced@${NEW_VERSION}" >> release_body.md
+        echo "uvx feedback-angel@${NEW_VERSION}" >> release_body.md
         echo '```' >> release_body.md
         echo "" >> release_body.md
         echo "## 🔗 Links" >> release_body.md
@@ -438,7 +438,7 @@ jobs:
         ## 使用方式
 
         僅支援 Web 模式
-        uvx mcp-feedback-enhanced test --web
+        uvx feedback-angel test --web
 
         如需桌面應用支援，請使用包含桌面應用的版本。
         EOF
@@ -491,7 +491,7 @@ jobs:
       run: |
         echo "🎉 Release v${{ steps.bump_version.outputs.new }} completed successfully!"
         echo ""
-        echo "📦 Published to PyPI: https://pypi.org/project/mcp-feedback-enhanced/"
+        echo "📦 Published to PyPI: https://pypi.org/project/feedback-angel/"
         echo "🚀 GitHub Release: https://github.com/Minidoracat/mcp-feedback-enhanced/releases/tag/v${{ steps.bump_version.outputs.new }}"
         echo "📝 Release notes generated from CHANGELOG files"
         echo ""
@@ -544,9 +544,9 @@ jobs:
         echo "✅ Next steps:"
         echo "  - Check the release on GitHub"
         echo "  - Verify the package on PyPI"
-        echo "  - Test installation with: uvx mcp-feedback-enhanced@v${{ steps.bump_version.outputs.new }}"
+        echo "  - Test installation with: uvx feedback-angel@v${{ steps.bump_version.outputs.new }}"
         if [ "${{ github.event.inputs.include_desktop }}" = "true" ]; then
-          echo "  - Test desktop mode with: uvx mcp-feedback-enhanced@v${{ steps.bump_version.outputs.new }} test --desktop"
+          echo "  - Test desktop mode with: uvx feedback-angel@v${{ steps.bump_version.outputs.new }} test --desktop"
         fi
         echo ""
         echo "📋 Note: Make sure CHANGELOG files are updated for future releases"

@@ -21,7 +21,7 @@
 **支持平台：** [Cursor](https://www.cursor.com) | [Cline](https://cline.bot) | [Windsurf](https://windsurf.com) | [Augment](https://www.augmentcode.com) | [Trae](https://www.trae.ai)
 
 ### 🔄 工作流程
-1. **AI 调用** → `mcp-feedback-enhanced` 工具
+1. **AI 调用** → `feedback-angel` 工具
 2. **界面启动** → 自动打开桌面应用程序或浏览器界面（根据配置）
 3. **智能交互** → 提示词选择、文字输入、图片上传、自动提交
 4. **即时反馈** → WebSocket 连接即时传递信息给 AI
@@ -101,9 +101,9 @@ pip install uv
 ```json
 {
   "mcpServers": {
-    "mcp-feedback-enhanced": {
+    "feedback-angel": {
       "command": "uvx",
-      "args": ["mcp-feedback-enhanced@latest"],
+      "args": ["feedback-angel@latest"],
       "timeout": 600,
       "autoApprove": ["interactive_feedback"]
     }
@@ -115,9 +115,9 @@ pip install uv
 ```json
 {
   "mcpServers": {
-    "mcp-feedback-enhanced": {
+    "feedback-angel": {
       "command": "uvx",
-      "args": ["mcp-feedback-enhanced@latest"],
+      "args": ["feedback-angel@latest"],
       "timeout": 600,
       "env": {
         "MCP_DEBUG": "false",
@@ -135,9 +135,9 @@ pip install uv
 ```json
 {
   "mcpServers": {
-    "mcp-feedback-enhanced": {
+    "feedback-angel": {
       "command": "uvx",
-      "args": ["mcp-feedback-enhanced@latest"],
+      "args": ["feedback-angel@latest"],
       "timeout": 600,
       "env": {
         "MCP_DESKTOP_MODE": "true",
@@ -161,7 +161,7 @@ pip install uv
 ```
 # MCP Interactive Feedback 规则
 
-注意在任务完成前根据mcp-feedback-enhanced工具的要求进行工具调用
+注意在任务完成前根据feedback-angel工具的要求进行工具调用
 ```
 
 ## ⚙️ 高级设置
@@ -195,19 +195,19 @@ pip install uv
 ### 测试选项
 ```bash
 # 版本查询
-uvx mcp-feedback-enhanced@latest version       # 检查版本
+uvx feedback-angel@latest version       # 检查版本
 
 # 界面测试
-uvx mcp-feedback-enhanced@latest test --web    # 测试 Web UI (自动持续运行)
-uvx mcp-feedback-enhanced@latest test --desktop # 测试桌面应用程序 (v2.5.0 新功能)
+uvx feedback-angel@latest test --web    # 测试 Web UI (自动持续运行)
+uvx feedback-angel@latest test --desktop # 测试桌面应用程序 (v2.5.0 新功能)
 
 # 调试模式
-MCP_DEBUG=true uvx mcp-feedback-enhanced@latest test
+MCP_DEBUG=true uvx feedback-angel@latest test
 
 # 指定语言测试
-MCP_LANGUAGE=en uvx mcp-feedback-enhanced@latest test --web    # 强制使用英文界面
-MCP_LANGUAGE=zh-TW uvx mcp-feedback-enhanced@latest test --web  # 强制使用繁体中文
-MCP_LANGUAGE=zh-CN uvx mcp-feedback-enhanced@latest test --web  # 强制使用简体中文
+MCP_LANGUAGE=en uvx feedback-angel@latest test --web    # 强制使用英文界面
+MCP_LANGUAGE=zh-TW uvx feedback-angel@latest test --web  # 强制使用繁体中文
+MCP_LANGUAGE=zh-CN uvx feedback-angel@latest test --web  # 强制使用简体中文
 ```
 
 ### 开发者安装
@@ -226,8 +226,8 @@ make test-desktop-func                                   # 桌面应用功能测
 
 # 或直接使用指令
 uv run python -m mcp_feedback_enhanced test              # 标准功能测试
-uvx --no-cache --with-editable . mcp-feedback-enhanced test --web   # Web UI 测试 (持续运行)
-uvx --no-cache --with-editable . mcp-feedback-enhanced test --desktop # 桌面应用测试
+uvx --no-cache --with-editable . feedback-angel test --web   # Web UI 测试 (持续运行)
+uvx --no-cache --with-editable . feedback-angel test --desktop # 桌面应用测试
 
 # 桌面应用构建 (v2.5.0 新功能)
 make build-desktop                                       # 构建桌面应用 (debug 模式)
@@ -275,9 +275,9 @@ A: 提供两种解决方案：
 ```json
 {
   "mcpServers": {
-    "mcp-feedback-enhanced": {
+    "feedback-angel": {
       "command": "uvx",
-      "args": ["mcp-feedback-enhanced@latest"],
+      "args": ["feedback-angel@latest"],
       "timeout": 600,
       "env": {
         "MCP_WEB_HOST": "0.0.0.0",
@@ -314,9 +314,9 @@ A: v2.5.0 新增跨平台桌面应用程序支持。在 MCP 配置中设定 `"MC
 ```json
 {
   "mcpServers": {
-    "mcp-feedback-enhanced": {
+    "feedback-angel": {
       "command": "uvx",
-      "args": ["mcp-feedback-enhanced@latest"],
+      "args": ["feedback-angel@latest"],
       "timeout": 600,
       "env": {
         "MCP_DESKTOP_MODE": "true",
@@ -330,14 +330,14 @@ A: v2.5.0 新增跨平台桌面应用程序支持。在 MCP 配置中设定 `"MC
 **配置文件示例**：[examples/mcp-config-desktop.json](examples/mcp-config-desktop.json)
 
 **Q: 如何使用旧版 PyQt6 GUI 界面？**
-A: v2.4.0 版本已完全移除 PyQt6 GUI 依赖。如需使用旧版 GUI，请指定 v2.3.0 或更早版本：`uvx mcp-feedback-enhanced@2.3.0`
+A: v2.4.0 版本已完全移除 PyQt6 GUI 依赖。如需使用旧版 GUI，请指定 v2.3.0 或更早版本：`uvx feedback-angel@2.3.0`
 **注意**：旧版本不包含新功能（提示词管理、自动提交、会话管理、桌面应用程序等）。
 
 **Q: 出现 "Unexpected token 'D'" 错误**
 A: 调试输出干扰。设置 `MCP_DEBUG=false` 或移除该环境变量。
 
 **Q: 中文字符乱码**
-A: 已在 v2.0.3 修复。更新到最新版本：`uvx mcp-feedback-enhanced@latest`
+A: 已在 v2.0.3 修复。更新到最新版本：`uvx feedback-angel@latest`
 
 **Q: 多屏幕环境下窗口消失或定位错误**
 A: 已在 v2.1.1 修复。进入「⚙️ 设置」标签页，勾选「总是在主屏幕中心显示窗口」即可解决。特别适用于 T 字型屏幕排列等复杂多屏幕配置。

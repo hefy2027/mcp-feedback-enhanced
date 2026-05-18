@@ -51,8 +51,6 @@ PyPI = "https://pypi.org/project/feedback-angel/"
 
 [project.scripts]
 feedback-angel = "mcp_feedback_enhanced.__main__:main"
-mcp-feedback-enhanced = "mcp_feedback_enhanced.__main__:main"
-interactive-feedback-mcp = "mcp_feedback_enhanced.__main__:main"
 
 [build-system]
 requires = ["hatchling"]
