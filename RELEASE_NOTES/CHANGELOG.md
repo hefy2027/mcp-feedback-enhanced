@@ -2,10 +2,10 @@
 
 This document records all version updates for **Feedback Angel** (formerly MCP Feedback Enhanced).
 
-## [v2.6.1] - 2026-05-18 - Image File Storage Mode & Project Rename
+## [v2.6.6] - 2026-05-19 - Extended Timeout & Project Rename
 
 ### 🌟 Version Highlights
-Added local file storage mode for images, allowing AI models to access uploaded images via file path instead of base64 encoding.
+Extended default feedback timeout to 1 day, added image file storage mode, and renamed project to feedback-angel.
 
 ### ✨ New Features
 - 🖼️ **Image File Storage Mode**: Support storing uploaded images to local disk via `MCP_IMAGE_DIR` environment variable
@@ -16,8 +16,13 @@ Added local file storage mode for images, allowing AI models to access uploaded 
   - New CLI command: `feedback-angel`
   - Install via: `uvx feedback-angel@latest`
 
+### 🚀 Improvements
+- ⏱️ **Extended Default Timeout**: Default feedback wait timeout changed from 600s (10 min) to 86400s (1 day)
+
 ### 🐛 Bug Fixes
 - Fixed Starlette 1.0 compatibility issues
+- Fixed PyO3 Python 3.14 compatibility (upgraded to PyO3 0.25)
+- Fixed GitHub Actions reusable workflow issues
 
 ---
 
