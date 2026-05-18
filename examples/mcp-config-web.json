@@ -11,6 +11,18 @@
         "MCP_DEBUG": "false"
       },
       "autoApprove": ["interactive_feedback"]
+    },
+    "mcp-feedback-enhanced-file-mode": {
+      "command": "uvx",
+      "args": ["mcp-feedback-enhanced@latest"],
+      "timeout": 600,
+      "env": {
+        "MCP_WEB_HOST": "127.0.0.1",
+        "MCP_WEB_PORT": "8765",
+        "MCP_IMAGE_DIR": "/tmp/mcp-images",
+        "MCP_IMAGE_MODE": "filepath"
+      },
+      "autoApprove": ["interactive_feedback"]
     }
   }
 }

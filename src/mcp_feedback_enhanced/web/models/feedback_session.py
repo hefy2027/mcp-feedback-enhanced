@@ -533,7 +533,15 @@ class WebFeedbackSession:
         self.feedback_result = feedback
         # 先設置設定，再處理圖片（因為處理圖片時需要用到設定）
         self.settings = settings or {}
-        self.images = self._process_images(images)
+
+        # 根据模式处理图片
+        from ...utils.image_storage import ImageStorageManager
+
+        storage = ImageStorageManager.get_instance()
+        if storage.is_file_mode():
+            self.images = self._process_images_file_mode(images)
+        else:
+            self.images = self._process_images(images)
 
         # 進入下一步：等待中 → 已提交反饋
         self.next_step("已送出反饋，等待下次 MCP 調用")
@@ -649,6 +657,38 @@ class WebFeedbackSession:
                 continue
 
         return processed_images
+
+    def _process_images_file_mode(self, images: list[dict]) -> list[dict]:
+        """文件模式下处理图片 - 保存文件名引用而非 bytes 数据"""
+        from ...utils.image_storage import ImageStorageManager
+
+        storage = ImageStorageManager.get_instance()
+        processed = []
+
+        for img in images:
+            try:
+                filename = img.get("filename") or img.get("name", "")
+                if not filename:
+                    continue
+
+                filepath = storage.get_image_path(self.session_id, filename)
+                if filepath.exists():
+                    processed.append(
+                        {
+                            "name": filename,
+                            "filepath": str(filepath),
+                            "size": filepath.stat().st_size,
+                            "mode": "file",
+                        }
+                    )
+                    debug_log(f"文件模式图片引用: {filepath}")
+                else:
+                    debug_log(f"文件模式图片不存在: {filepath}")
+            except Exception as e:
+                debug_log(f"文件模式图片处理错误: {e}")
+                continue
+
+        return processed
 
     def add_log(self, log_entry: str):
         """添加命令日誌"""

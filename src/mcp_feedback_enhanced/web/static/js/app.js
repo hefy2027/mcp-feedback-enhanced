@@ -1206,10 +1206,18 @@
             }
 
             // 3. 發送回饋到 AI 助手
+            // 文件模式下只發送文件名引用，不發送 base64 數據
+            const imagesToSend = feedbackData.images.map(function(img) {
+                if (img.mode === 'file') {
+                    return { filename: img.filename || img.name, name: img.name, size: img.size, mode: 'file' };
+                }
+                return img;
+            });
+
             const success = this.webSocketManager.send({
                 type: 'submit_feedback',
                 feedback: feedbackData.feedback,
-                images: feedbackData.images,
+                images: imagesToSend,
                 settings: feedbackData.settings
             });
 

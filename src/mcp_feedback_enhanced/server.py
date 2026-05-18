@@ -287,75 +287,102 @@ def create_feedback_text(feedback_data: dict) -> str:
     # 圖片附件概要
     if feedback_data.get("images"):
         images = feedback_data["images"]
-        text_parts.append(f"=== 圖片附件概要 ===\n用戶提供了 {len(images)} 張圖片：")
 
-        for i, img in enumerate(images, 1):
-            size = img.get("size", 0)
-            name = img.get("name", "unknown")
+        # 检查是否为文件模式
+        from .utils.image_storage import ImageStorageManager
 
-            # 智能單位顯示
-            if size < 1024:
-                size_str = f"{size} B"
-            elif size < 1024 * 1024:
-                size_kb = size / 1024
-                size_str = f"{size_kb:.1f} KB"
-            else:
-                size_mb = size / (1024 * 1024)
-                size_str = f"{size_mb:.1f} MB"
+        storage = ImageStorageManager.get_instance()
 
-            img_info = f"  {i}. {name} ({size_str})"
+        if storage.is_file_mode() and images and images[0].get("mode") == "file":
+            # 文件模式: 返回文件路径提示
+            text_parts.append(
+                f"=== 图片附件 ===\n用户提供了 {len(images)} 张图片，请查看以下图片:"
+            )
+            for i, img in enumerate(images, 1):
+                filepath = img.get("filepath", "")
+                name = img.get("name", "unknown")
+                size = img.get("size", 0)
 
-            # 為提高兼容性，添加 base64 預覽信息
-            if img.get("data"):
-                try:
-                    if isinstance(img["data"], bytes):
-                        img_base64 = base64.b64encode(img["data"]).decode("utf-8")
-                    elif isinstance(img["data"], str):
-                        img_base64 = img["data"]
-                    else:
-                        img_base64 = None
+                if size < 1024:
+                    size_str = f"{size} B"
+                elif size < 1024 * 1024:
+                    size_str = f"{size / 1024:.1f} KB"
+                else:
+                    size_str = f"{size / (1024 * 1024):.1f} MB"
 
-                    if img_base64:
-                        # 只顯示前50個字符的預覽
-                        preview = (
-                            img_base64[:50] + "..."
-                            if len(img_base64) > 50
-                            else img_base64
-                        )
-                        img_info += f"\n     Base64 預覽: {preview}"
-                        img_info += f"\n     完整 Base64 長度: {len(img_base64)} 字符"
+                text_parts.append(f"  {i}. {name} ({size_str}): {filepath}")
+        else:
+            # base64 模式: 保持原有逻辑
+            text_parts.append(
+                f"=== 圖片附件概要 ===\n用戶提供了 {len(images)} 張圖片："
+            )
 
-                        # 如果 AI 助手不支援 MCP 圖片，可以提供完整 base64
-                        debug_log(f"圖片 {i} Base64 已準備，長度: {len(img_base64)}")
+            for i, img in enumerate(images, 1):
+                size = img.get("size", 0)
+                name = img.get("name", "unknown")
 
-                        # 檢查是否啟用 Base64 詳細模式（從 UI 設定中獲取）
-                        include_full_base64 = feedback_data.get("settings", {}).get(
-                            "enable_base64_detail", False
-                        )
+                if size < 1024:
+                    size_str = f"{size} B"
+                elif size < 1024 * 1024:
+                    size_kb = size / 1024
+                    size_str = f"{size_kb:.1f} KB"
+                else:
+                    size_mb = size / (1024 * 1024)
+                    size_str = f"{size_mb:.1f} MB"
 
-                        if include_full_base64:
-                            # 根據檔案名推斷 MIME 類型
-                            file_name = img.get("name", "image.png")
-                            if file_name.lower().endswith((".jpg", ".jpeg")):
-                                mime_type = "image/jpeg"
-                            elif file_name.lower().endswith(".gif"):
-                                mime_type = "image/gif"
-                            elif file_name.lower().endswith(".webp"):
-                                mime_type = "image/webp"
-                            else:
-                                mime_type = "image/png"
+                img_info = f"  {i}. {name} ({size_str})"
 
-                            img_info += f"\n     完整 Base64: data:{mime_type};base64,{img_base64}"
+                if img.get("data"):
+                    try:
+                        if isinstance(img["data"], bytes):
+                            img_base64 = base64.b64encode(img["data"]).decode(
+                                "utf-8"
+                            )
+                        elif isinstance(img["data"], str):
+                            img_base64 = img["data"]
+                        else:
+                            img_base64 = None
 
-                except Exception as e:
-                    debug_log(f"圖片 {i} Base64 處理失敗: {e}")
+                        if img_base64:
+                            preview = (
+                                img_base64[:50] + "..."
+                                if len(img_base64) > 50
+                                else img_base64
+                            )
+                            img_info += f"\n     Base64 預覽: {preview}"
+                            img_info += (
+                                f"\n     完整 Base64 長度: {len(img_base64)} 字符"
+                            )
 
-            text_parts.append(img_info)
+                            debug_log(
+                                f"圖片 {i} Base64 已準備，長度: {len(img_base64)}"
+                            )
 
-        # 添加兼容性說明
-        text_parts.append(
-            "\n💡 注意：如果 AI 助手無法顯示圖片，圖片數據已包含在上述 Base64 信息中。"
-        )
+                            include_full_base64 = feedback_data.get(
+                                "settings", {}
+                            ).get("enable_base64_detail", False)
+
+                            if include_full_base64:
+                                file_name = img.get("name", "image.png")
+                                if file_name.lower().endswith((".jpg", ".jpeg")):
+                                    mime_type = "image/jpeg"
+                                elif file_name.lower().endswith(".gif"):
+                                    mime_type = "image/gif"
+                                elif file_name.lower().endswith(".webp"):
+                                    mime_type = "image/webp"
+                                else:
+                                    mime_type = "image/png"
+
+                                img_info += f"\n     完整 Base64: data:{mime_type};base64,{img_base64}"
+
+                    except Exception as e:
+                        debug_log(f"圖片 {i} Base64 處理失敗: {e}")
+
+                text_parts.append(img_info)
+
+            text_parts.append(
+                "\n💡 注意：如果 AI 助手無法顯示圖片，圖片數據已包含在上述 Base64 信息中。"
+            )
 
     return "\n\n".join(text_parts) if text_parts else "用戶未提供任何回饋內容。"
 
@@ -491,10 +518,18 @@ async def interactive_feedback(
 
         # 添加圖片回饋
         if result.get("images"):
-            mcp_images = process_images(result["images"])
-            # 修復 arg-type 錯誤 - 直接擴展列表
-            feedback_items.extend(mcp_images)
-            debug_log(f"已添加 {len(mcp_images)} 張圖片")
+            from .utils.image_storage import ImageStorageManager
+
+            storage = ImageStorageManager.get_instance()
+
+            if storage.is_file_mode():
+                debug_log(
+                    f"文件模式: {len(result['images'])} 张图片路径已包含在文本中"
+                )
+            else:
+                mcp_images = process_images(result["images"])
+                feedback_items.extend(mcp_images)
+                debug_log(f"已添加 {len(mcp_images)} 張圖片")
 
         # 確保至少有一個回饋項目
         if not feedback_items:

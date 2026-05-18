@@ -11,8 +11,8 @@ import time
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from fastapi import Request, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi import File, Request, UploadFile, WebSocket, WebSocketDisconnect
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
 from ... import __version__
 from ...debug import web_debug_log as debug_log
@@ -62,9 +62,9 @@ def setup_routes(manager: "WebUIManager"):
         if not current_session:
             # 沒有活躍會話時顯示等待頁面
             return manager.templates.TemplateResponse(
+                request,
                 "index.html",
-                {
-                    "request": request,
+                context={
                     "title": "MCP Feedback Enhanced",
                     "has_session": False,
                     "version": __version__,
@@ -76,9 +76,9 @@ def setup_routes(manager: "WebUIManager"):
         layout_mode = load_user_layout_settings()
 
         return manager.templates.TemplateResponse(
+            request,
             "feedback.html",
-            {
-                "request": request,
+            context={
                 "project_directory": current_session.project_directory,
                 "summary": current_session.summary,
                 "title": "Interactive Feedback - 回饋收集",
@@ -435,6 +435,102 @@ def setup_routes(manager: "WebUIManager"):
                     "messageCode": get_msg_code("clear_failed"),
                 },
             )
+
+    # ===== 图片文件存储模式 API =====
+
+    @manager.app.get("/api/image-config")
+    async def get_image_config():
+        """返回当前图片模式配置"""
+        from ...utils.image_storage import ImageStorageManager
+
+        storage = ImageStorageManager.get_instance()
+        return JSONResponse(
+            content={
+                "mode": "file" if storage.is_file_mode() else "base64",
+                "image_mode": storage.image_mode,
+                "upload_url": "/api/upload-image"
+                if storage.is_file_mode()
+                else None,
+            }
+        )
+
+    @manager.app.post("/api/upload-image")
+    async def upload_image(image: UploadFile = File(...)):
+        """上传图片文件（文件模式）"""
+        from ...utils.image_storage import ImageStorageManager
+
+        storage = ImageStorageManager.get_instance()
+        if not storage.is_file_mode():
+            return JSONResponse(
+                status_code=400,
+                content={
+                    "error": "File mode not enabled",
+                    "messageCode": "image.file_mode_disabled",
+                },
+            )
+
+        current_session = manager.get_current_session()
+        if not current_session:
+            return JSONResponse(
+                status_code=404,
+                content={
+                    "error": "No active session",
+                    "messageCode": get_msg_code("no_active_session"),
+                },
+            )
+
+        data = await image.read()
+        if not data:
+            return JSONResponse(
+                status_code=400,
+                content={"error": "Empty file"},
+            )
+
+        result = storage.save_image(
+            current_session.session_id,
+            image.filename or "image.png",
+            data,
+        )
+        result["url"] = storage.get_image_url(
+            current_session.session_id, result["filename"]
+        )
+        result["status"] = "success"
+        debug_log(
+            f"图片上传成功: {result['filename']} ({result['size']} bytes)"
+        )
+        return JSONResponse(content=result)
+
+    @manager.app.get("/api/images/{session_id}/{filename}")
+    async def serve_image(session_id: str, filename: str):
+        """提供图片文件服务"""
+        from ...utils.image_storage import ImageStorageManager
+
+        storage = ImageStorageManager.get_instance()
+        if not storage.is_file_mode():
+            return JSONResponse(
+                status_code=404,
+                content={"error": "File mode not enabled"},
+            )
+
+        image_path = storage.get_image_path(session_id, filename)
+        if not image_path.exists():
+            return JSONResponse(
+                status_code=404,
+                content={"error": "Image not found"},
+            )
+
+        # 路径遍历安全检查
+        try:
+            base = storage.base_dir
+            if base:
+                image_path.resolve().relative_to(base.resolve())
+        except (ValueError, AttributeError):
+            return JSONResponse(
+                status_code=403,
+                content={"error": "Access denied"},
+            )
+
+        return FileResponse(str(image_path))
 
     @manager.app.get("/api/load-session-history")
     async def load_session_history(request: Request):

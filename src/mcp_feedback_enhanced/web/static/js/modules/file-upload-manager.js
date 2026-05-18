@@ -29,7 +29,7 @@
         this.debounceTimeout = null;
         this.lastClickTime = 0;
         this.isProcessingClick = false;
-        this.lastClickTime = 0;
+        this.imageConfig = null; // {mode: 'file'|'base64', image_mode, upload_url}
         
         // 事件回調
         this.onFileAdd = options.onFileAdd || null;
@@ -55,7 +55,10 @@
         this.setupEventDelegation();
         this.setupGlobalPasteHandler();
         this.isInitialized = true;
-        
+
+        // 获取图片模式配置
+        this.fetchImageConfig();
+
         console.log('✅ FileUploadManager 事件委託設置完成');
     };
 
@@ -322,38 +325,77 @@
      * 添加檔案到列表
      */
     FileUploadManager.prototype.addFiles = function(files) {
-        const promises = files.map(file => this.fileToBase64(file));
-        
-        const self = this;
-        Promise.all(promises)
-            .then(function(base64Results) {
-                base64Results.forEach(function(base64, index) {
-                    const file = files[index];
-                    const fileData = {
-                        name: file.name,
-                        size: file.size,
+        var self = this;
+
+        if (this.isFileMode()) {
+            // 文件模式: multipart 上傳到服務器
+            var uploadPromises = files.map(function(file) {
+                return self.uploadFileToServer(file).then(function(result) {
+                    return {
+                        name: result.filename,
+                        filename: result.filename,
+                        size: result.size,
                         type: file.type,
-                        data: base64,
+                        url: result.url,
+                        filepath: result.filepath,
+                        mode: 'file',
                         timestamp: Date.now()
                     };
-                    
-                    self.files.push(fileData);
-                    console.log('✅ 檔案已添加:', file.name);
-                    
-                    if (self.onFileAdd) {
-                        self.onFileAdd(fileData);
-                    }
                 });
-                
-                self.updateAllPreviews();
-            })
-            .catch(function(error) {
-                console.error('❌ 檔案處理失敗:', error);
-                const message = window.i18nManager ?
-                    window.i18nManager.t('fileUpload.processingFailed', '檔案處理失敗，請重試') :
-                    '檔案處理失敗，請重試';
-                self.showMessage(message, 'error');
             });
+
+            Promise.all(uploadPromises)
+                .then(function(fileDataList) {
+                    fileDataList.forEach(function(fileData) {
+                        self.files.push(fileData);
+                        console.log('✅ 文件已上傳並添加:', fileData.name);
+                        if (self.onFileAdd) {
+                            self.onFileAdd(fileData);
+                        }
+                    });
+                    self.updateAllPreviews();
+                })
+                .catch(function(error) {
+                    console.error('❌ 文件上傳失敗:', error);
+                    var message = window.i18nManager ?
+                        window.i18nManager.t('fileUpload.uploadFailed', '文件上傳失敗，請重試') :
+                        '文件上傳失敗，請重試';
+                    self.showMessage(message, 'error');
+                });
+        } else {
+            // base64 模式: 原有邏輯
+            var promises = files.map(function(file) { return self.fileToBase64(file); });
+
+            Promise.all(promises)
+                .then(function(base64Results) {
+                    base64Results.forEach(function(base64, index) {
+                        var file = files[index];
+                        var fileData = {
+                            name: file.name,
+                            size: file.size,
+                            type: file.type,
+                            data: base64,
+                            timestamp: Date.now()
+                        };
+
+                        self.files.push(fileData);
+                        console.log('✅ 檔案已添加:', file.name);
+
+                        if (self.onFileAdd) {
+                            self.onFileAdd(fileData);
+                        }
+                    });
+
+                    self.updateAllPreviews();
+                })
+                .catch(function(error) {
+                    console.error('❌ 檔案處理失敗:', error);
+                    var message = window.i18nManager ?
+                        window.i18nManager.t('fileUpload.processingFailed', '檔案處理失敗，請重試') :
+                        '檔案處理失敗，請重試';
+                    self.showMessage(message, 'error');
+                });
+        }
     };
 
     /**
@@ -367,6 +409,53 @@
             };
             reader.onerror = reject;
             reader.readAsDataURL(file);
+        });
+    };
+
+    /**
+     * 獲取圖片模式配置
+     */
+    FileUploadManager.prototype.fetchImageConfig = function() {
+        var self = this;
+        return fetch('/api/image-config')
+            .then(function(response) { return response.json(); })
+            .then(function(config) {
+                self.imageConfig = config;
+                console.log('📷 圖片模式配置:', config.mode);
+                return config;
+            })
+            .catch(function(error) {
+                console.warn('⚠️ 獲取圖片配置失敗，使用 base64 模式:', error);
+                self.imageConfig = { mode: 'base64' };
+                return self.imageConfig;
+            });
+    };
+
+    /**
+     * 是否為文件存儲模式
+     */
+    FileUploadManager.prototype.isFileMode = function() {
+        return this.imageConfig && this.imageConfig.mode === 'file';
+    };
+
+    /**
+     * 上傳文件到服務器（文件模式）
+     */
+    FileUploadManager.prototype.uploadFileToServer = function(file) {
+        var formData = new FormData();
+        formData.append('image', file);
+
+        return fetch('/api/upload-image', {
+            method: 'POST',
+            body: formData
+        })
+        .then(function(response) { return response.json(); })
+        .then(function(result) {
+            if (result.status === 'success') {
+                console.log('✅ 文件上傳成功:', result.filename);
+                return result;
+            }
+            throw new Error(result.error || '上傳失敗');
         });
     };
 
@@ -407,7 +496,11 @@
 
         // 圖片元素
         const img = document.createElement('img');
-        img.src = 'data:' + file.type + ';base64,' + file.data;
+        if (file.mode === 'file' && file.url) {
+            img.src = file.url;
+        } else {
+            img.src = 'data:' + file.type + ';base64,' + file.data;
+        }
         img.alt = file.name;
         img.title = file.name + ' (' + this.formatFileSize(file.size) + ')';
 

@@ -174,6 +174,8 @@ follow mcp-feedback-enhanced instructions
 | `MCP_WEB_PORT` | Web UI port | `1024-65535` | `8765` |
 | `MCP_DESKTOP_MODE` | Desktop application mode | `true`/`false` | `false` |
 | `MCP_LANGUAGE` | Force UI language | `zh-TW`/`zh-CN`/`en` | Auto-detect |
+| `MCP_IMAGE_DIR` | Image file storage directory (enables file mode) | File path | Not set (base64 mode) |
+| `MCP_IMAGE_MODE` | How AI receives image references (file mode only) | `filepath`/`url` | `filepath` |
 
 **`MCP_WEB_HOST` Explanation**:
 - `127.0.0.1` (default): Local access only, higher security
@@ -191,6 +193,16 @@ follow mcp-feedback-enhanced instructions
   3. System environment variables (LANG, LC_ALL, etc.)
   4. System default language
   5. Fallback to default language (Traditional Chinese)
+
+**`MCP_IMAGE_DIR` Explanation**:
+- When not set (default): Images are processed using base64 encoding (original behavior)
+- When set to a directory path: Enables file storage mode - images are saved to disk instead of base64
+- If the path is invalid, falls back to system temp directory
+- Old session images are automatically cleaned up when a new session is created
+
+**`MCP_IMAGE_MODE` Explanation** (only effective when `MCP_IMAGE_DIR` is set):
+- `filepath` (default): AI receives local file paths (use Read tool to view images)
+- `url`: AI receives HTTP URLs (use WebFetch tool to view images)
 
 ### Testing Options
 ```bash

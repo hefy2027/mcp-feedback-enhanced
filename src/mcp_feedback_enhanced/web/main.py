@@ -341,6 +341,17 @@ class WebUIManager:
 
         # 如果有舊會話，處理狀態轉換和清理
         if old_session:
+            # 文件模式下清理旧会话的图片文件
+            from ..utils.image_storage import ImageStorageManager
+
+            storage = ImageStorageManager.get_instance()
+            if storage.is_file_mode():
+                cleaned = storage.cleanup_session_images(old_session.session_id)
+                if cleaned > 0:
+                    debug_log(
+                        f"已清理旧会话 {old_session.session_id} 的 {cleaned} 个图片文件"
+                    )
+
             debug_log(
                 f"處理舊會話 {old_session.session_id} 的狀態轉換，當前狀態: {old_session.status.value}"
             )
