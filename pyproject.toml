@@ -1,13 +1,14 @@
 [project]
-name = "mcp-feedback-enhanced"
-version = "2.6.0"
+name = "feedback-angel"
+version = "2.6.1"
 description = "Enhanced MCP server for interactive user feedback and command execution in AI-assisted development, featuring dual interface support (Web UI and Desktop Application) with intelligent environment detection and cross-platform compatibility."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [
-    { name = "Minidoracat", email = "minidora0702@gmail.com" }
+    { name = "Minidoracat", email = "minidora0702@gmail.com" },
+    { name = "hefy2027", email = "hefeiyu2027@gmail.com" }
 ]
-keywords = ["mcp", "ai", "feedback", "web-ui", "desktop-app", "interactive", "development", "cross-platform", "tauri", "dual-interface"]
+keywords = ["mcp", "ai", "feedback", "web-ui", "desktop-app", "interactive", "development", "cross-platform", "tauri", "dual-interface", "feedback-angel"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -46,8 +47,10 @@ dev = [
 Homepage = "https://github.com/Minidoracat/mcp-feedback-enhanced"
 Repository = "https://github.com/Minidoracat/mcp-feedback-enhanced"
 Issues = "https://github.com/Minidoracat/mcp-feedback-enhanced/issues"
+PyPI = "https://pypi.org/project/feedback-angel/"
 
 [project.scripts]
+feedback-angel = "mcp_feedback_enhanced.__main__:main"
 mcp-feedback-enhanced = "mcp_feedback_enhanced.__main__:main"
 interactive-feedback-mcp = "mcp_feedback_enhanced.__main__:main"
 
