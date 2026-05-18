@@ -23,7 +23,7 @@ tauri = { version = "2.2", features = ["custom-protocol"] }
 tauri-plugin-shell = "2.2"
 
 # PyO3 用於 Python 綁定
-pyo3 = { version = "0.22", features = ["extension-module"] }
+pyo3 = { version = "0.23", features = ["extension-module"] }
 
 # 序列化支援
 serde = { version = "1.0", features = ["derive"] }
