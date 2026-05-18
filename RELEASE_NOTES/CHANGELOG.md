@@ -1,6 +1,25 @@
 # Changelog (English)
 
-This document records all version updates for **MCP Feedback Enhanced**.
+This document records all version updates for **Feedback Angel** (formerly MCP Feedback Enhanced).
+
+## [v2.6.1] - 2026-05-18 - Image File Storage Mode & Project Rename
+
+### 🌟 Version Highlights
+Added local file storage mode for images, allowing AI models to access uploaded images via file path instead of base64 encoding.
+
+### ✨ New Features
+- 🖼️ **Image File Storage Mode**: Support storing uploaded images to local disk via `MCP_IMAGE_DIR` environment variable
+  - `MCP_IMAGE_DIR` not set → base64 mode (original behavior)
+  - `MCP_IMAGE_DIR` set → file mode (images saved to disk, AI receives file paths)
+  - `MCP_IMAGE_MODE` supports `filepath` (default) and `url` modes
+- 📦 **Project Renamed**: Package renamed from `mcp-feedback-enhanced` to `feedback-angel`
+  - New CLI command: `feedback-angel`
+  - Install via: `uvx feedback-angel@latest`
+
+### 🐛 Bug Fixes
+- Fixed Starlette 1.0 compatibility issues
+
+---
 
 ## [v2.6.0] - 2025-06-28 - Intelligent Session Management & Automation Enhancement
 

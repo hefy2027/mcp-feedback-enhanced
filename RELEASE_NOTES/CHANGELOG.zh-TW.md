@@ -1,6 +1,25 @@
 # 更新日誌 (繁體中文)
 
-本文件記錄了 **MCP Feedback Enhanced** 的所有版本更新內容。
+本文件記錄了 **Feedback Angel**（原 MCP Feedback Enhanced）的所有版本更新內容。
+
+## [v2.6.1] - 2026-05-18 - 圖片文件存儲模式 & 專案更名
+
+### 🌟 版本亮點
+新增圖片本地文件存儲模式，允許 AI 模型透過文件路徑存取上傳的圖片，而非 base64 編碼。
+
+### ✨ 新功能
+- 🖼️ **圖片文件存儲模式**：透過 `MCP_IMAGE_DIR` 環境變數支援將上傳圖片儲存到本地磁碟
+  - 未設置 `MCP_IMAGE_DIR` → base64 模式（原有行為）
+  - 設置 `MCP_IMAGE_DIR` → 文件模式（圖片存磁碟，AI 獲得文件路徑）
+  - `MCP_IMAGE_MODE` 支援 `filepath`（預設）和 `url` 兩種模式
+- 📦 **專案更名**：套件名從 `mcp-feedback-enhanced` 改為 `feedback-angel`
+  - 新 CLI 命令：`feedback-angel`
+  - 安裝方式：`uvx feedback-angel@latest`
+
+### 🐛 問題修復
+- 修復 Starlette 1.0 相容性問題
+
+---
 
 ## [v2.6.0] - 2025-06-28 - 智能會話管理與自動化功能強化
 
