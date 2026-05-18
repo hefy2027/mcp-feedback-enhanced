@@ -424,4 +424,4 @@
 
 ---
 
-**完整项目信息：** [GitHub - mcp-feedback-enhanced](https://github.com/Minidoracat/mcp-feedback-enhanced)
+**完整项目信息：** [GitHub - mcp-feedback-enhanced](https://github.com/hefy2027/feedback-angel)

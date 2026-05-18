@@ -138,5 +138,5 @@ python scripts/cleanup_cache.py --clean
 
 If you encounter cleanup issues, please:
 1. Check the troubleshooting section in this document
-2. Report issues on [GitHub Issues](https://github.com/Minidoracat/mcp-feedback-enhanced/issues)
+2. Report issues on [GitHub Issues](https://github.com/hefy2027/feedback-angel/issues)
 3. Provide error messages and system information

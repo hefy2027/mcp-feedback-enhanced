@@ -212,7 +212,7 @@ MCP_LANGUAGE=zh-CN uvx feedback-angel@latest test --web  # 强制使用简体中
 
 ### 开发者安装
 ```bash
-git clone https://github.com/Minidoracat/mcp-feedback-enhanced.git
+git clone https://github.com/hefy2027/feedback-angel.git
 cd mcp-feedback-enhanced
 uv sync
 ```
@@ -389,20 +389,20 @@ A: 各种 AI 模型（包括 Gemini Pro 2.5、Claude 等）在图片解析上可
 
 ### 贡献者
 **penn201500** - [GitHub @penn201500](https://github.com/penn201500)
-- 🎯 自动聚焦输入框功能 ([PR #39](https://github.com/Minidoracat/mcp-feedback-enhanced/pull/39))
+- 🎯 自动聚焦输入框功能 ([PR #39](https://github.com/hefy2027/feedback-angel/pull/39))
 
 **leo108** - [GitHub @leo108](https://github.com/leo108)
-- 🌐 SSH 远程开发支持 (`MCP_WEB_HOST` 环境变量) ([PR #113](https://github.com/Minidoracat/mcp-feedback-enhanced/pull/113))
+- 🌐 SSH 远程开发支持 (`MCP_WEB_HOST` 环境变量) ([PR #113](https://github.com/hefy2027/feedback-angel/pull/113))
 
 **Alsan** - [GitHub @Alsan](https://github.com/Alsan)
-- 🍎 macOS PyO3 编译配置支持 ([PR #93](https://github.com/Minidoracat/mcp-feedback-enhanced/pull/93))
+- 🍎 macOS PyO3 编译配置支持 ([PR #93](https://github.com/hefy2027/feedback-angel/pull/93))
 
 **fireinice** - [GitHub @fireinice](https://github.com/fireinice)
-- 📝 工具文档优化 (LLM 指令移至 docstring) ([PR #105](https://github.com/Minidoracat/mcp-feedback-enhanced/pull/105))
+- 📝 工具文档优化 (LLM 指令移至 docstring) ([PR #105](https://github.com/hefy2027/feedback-angel/pull/105))
 
 ### 社群支援
 - **Discord：** [https://discord.gg/Gur2V67](https://discord.gg/Gur2V67)
-- **Issues：** [GitHub Issues](https://github.com/Minidoracat/mcp-feedback-enhanced/issues)
+- **Issues：** [GitHub Issues](https://github.com/hefy2027/feedback-angel/issues)
 
 ## 📄 授权
 
@@ -410,7 +410,7 @@ MIT 授权条款 - 详见 [LICENSE](LICENSE) 档案
 
 ## 📈 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Minidoracat/mcp-feedback-enhanced&type=Date)](https://star-history.com/#Minidoracat/mcp-feedback-enhanced&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=hefy2027/feedback-angel&type=Date)](https://star-history.com/#hefy2027/feedback-angel&Date)
 
 ---
 **🌟 欢迎 Star 并分享给更多开发者！**

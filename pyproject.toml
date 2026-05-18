@@ -44,9 +44,9 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Minidoracat/mcp-feedback-enhanced"
-Repository = "https://github.com/Minidoracat/mcp-feedback-enhanced"
-Issues = "https://github.com/Minidoracat/mcp-feedback-enhanced/issues"
+Homepage = "https://github.com/hefy2027/feedback-angel"
+Repository = "https://github.com/hefy2027/feedback-angel"
+Issues = "https://github.com/hefy2027/feedback-angel/issues"
 PyPI = "https://pypi.org/project/feedback-angel/"
 
 [project.scripts]

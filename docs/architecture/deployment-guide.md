@@ -78,7 +78,7 @@ mcp-feedback-enhanced web
 #### 3. 從源碼安裝
 ```bash
 # 克隆倉庫
-git clone https://github.com/Minidoracat/mcp-feedback-enhanced.git
+git clone https://github.com/hefy2027/feedback-angel.git
 cd mcp-feedback-enhanced
 
 # 使用 uv 安裝

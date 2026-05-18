@@ -224,7 +224,7 @@ MCP_LANGUAGE=zh-CN uvx feedback-angel@latest test --web  # Force Simplified Chin
 
 ### Developer Installation
 ```bash
-git clone https://github.com/Minidoracat/mcp-feedback-enhanced.git
+git clone https://github.com/hefy2027/feedback-angel.git
 cd mcp-feedback-enhanced
 uv sync
 ```
@@ -401,20 +401,20 @@ If you find it useful, please:
 
 ### Contributors
 **penn201500** - [GitHub @penn201500](https://github.com/penn201500)
-- 🎯 Auto-focus input box feature ([PR #39](https://github.com/Minidoracat/mcp-feedback-enhanced/pull/39))
+- 🎯 Auto-focus input box feature ([PR #39](https://github.com/hefy2027/feedback-angel/pull/39))
 
 **leo108** - [GitHub @leo108](https://github.com/leo108)
-- 🌐 SSH Remote Development Support (`MCP_WEB_HOST` environment variable) ([PR #113](https://github.com/Minidoracat/mcp-feedback-enhanced/pull/113))
+- 🌐 SSH Remote Development Support (`MCP_WEB_HOST` environment variable) ([PR #113](https://github.com/hefy2027/feedback-angel/pull/113))
 
 **Alsan** - [GitHub @Alsan](https://github.com/Alsan)
-- 🍎 macOS PyO3 Compilation Configuration Support ([PR #93](https://github.com/Minidoracat/mcp-feedback-enhanced/pull/93))
+- 🍎 macOS PyO3 Compilation Configuration Support ([PR #93](https://github.com/hefy2027/feedback-angel/pull/93))
 
 **fireinice** - [GitHub @fireinice](https://github.com/fireinice)
-- 📝 Tool Documentation Optimization (LLM instructions moved to docstring) ([PR #105](https://github.com/Minidoracat/mcp-feedback-enhanced/pull/105))
+- 📝 Tool Documentation Optimization (LLM instructions moved to docstring) ([PR #105](https://github.com/hefy2027/feedback-angel/pull/105))
 
 ### Community Support
 - **Discord:** [https://discord.gg/Gur2V67](https://discord.gg/Gur2V67)
-- **Issues:** [GitHub Issues](https://github.com/Minidoracat/mcp-feedback-enhanced/issues)
+- **Issues:** [GitHub Issues](https://github.com/hefy2027/feedback-angel/issues)
 
 ## 📄 License
 
@@ -422,7 +422,7 @@ MIT License - See [LICENSE](LICENSE) file for details
 
 ## 📈 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Minidoracat/mcp-feedback-enhanced&type=Date)](https://star-history.com/#Minidoracat/mcp-feedback-enhanced&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=hefy2027/feedback-angel&type=Date)](https://star-history.com/#hefy2027/feedback-angel&Date)
 
 ---
 **🌟 Welcome to Star and share with more developers!**
